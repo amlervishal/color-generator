@@ -1,10 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 
 export default function RandomColorGenerator() {
   const [typeOfColor, setTypeOfColor] = useState("hex");
   const [color, setColor] = useState("#fff");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return window.removeEventListener("resize", handleResize);
+  }, []);
 
   function randomColorUtility(length) {
     return Math.floor(Math.random() * length);
@@ -40,17 +47,19 @@ export default function RandomColorGenerator() {
     }
   }
 
+  const mainDivStyle = {
+    width: windowWidth < 768 ? "90vw" : "50vw",
+    height: windowWidth < 768 ? "30vh" : "50vh",
+    background: color,
+    borderRadius: "20px",
+    margin: "20px auto",
+    transition: "all 0.3s ease",
+  };
+
   return (
     <>
       <h1>Random Color Generator</h1>
-      <div
-        style={{
-          width: "50vw",
-          height: "50vh",
-          background: color,
-          borderRadius: "20px",
-        }}
-      ></div>
+      <div style={mainDivStyle}></div>
       <h4>Genereated Color: {color}</h4>
       <Button onClick={() => setTypeOfColor("hex")}>Generate HEX</Button>
       <Button onClick={() => setTypeOfColor("rgb")}>Generate RGB</Button>
