@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react-swc'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/your-repo-name/',
+  base: '/color-generator/',
   build: {
     outDir: 'docs',
     emptyOutDir: true,
